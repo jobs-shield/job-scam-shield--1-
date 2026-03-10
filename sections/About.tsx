@@ -20,13 +20,13 @@ const About = () => {
                         transition={{ duration: 1.1, ease: "easeOut" }}
                         className="w-full lg:flex-1"
                     >
-                        <div className="relative w-full max-w-sm sm:max-w-md mx-auto aspect-square animate-float">
+                        <div className="relative w-full max-w-sm sm:max-w-md mx-auto animate-float">
                             {/* Orbital Frames */}
-                            <div className="absolute inset-0 border-2 border-primary/10 rounded-[3rem] animate-[spin_20s_linear_infinite] opacity-30" />
-                            <div className="absolute inset-6 sm:inset-8 border-2 border-secondary/10 rounded-[3rem] animate-[spin_15s_linear_infinite_reverse] opacity-20" />
+                            <div className="absolute -inset-4 sm:-inset-6 border-2 border-primary/10 rounded-[3rem] animate-[spin_20s_linear_infinite] opacity-30 pointer-events-none" />
+                            <div className="absolute -inset-1 sm:-inset-2 border-2 border-secondary/10 rounded-[3rem] animate-[spin_15s_linear_infinite_reverse] opacity-20 pointer-events-none" />
 
                             {/* Main Profile Card */}
-                            <div className="absolute inset-3 sm:inset-4 glass-card p-6 sm:p-10 md:p-12 flex flex-col items-center justify-center text-center overflow-hidden">
+                            <div className="relative z-10 glass-card p-6 sm:p-10 md:p-12 flex flex-col items-center justify-center text-center overflow-hidden w-full h-full min-h-[380px] sm:min-h-[420px]">
                                 <div className="absolute inset-0 cyber-grid-overlay opacity-10 pointer-events-none" />
 
                                 <div className="relative z-10 w-full">

@@ -35,7 +35,7 @@ const Hero = () => {
                         </div>
 
                         {/* Main Name */}
-                        <h1 className="text-responsive-hero font-black tracking-tighter mb-6 sm:mb-8 leading-[0.85] mix-blend-lighten">
+                        <h1 className="text-responsive-hero font-black tracking-tighter mb-6 sm:mb-8 leading-[1.1] sm:leading-[0.85] mix-blend-lighten">
                             <span className="opacity-80 block sm:inline">VIJAY BHAGWAT</span>{" "}
                             <br className="hidden sm:block" />
                             <span className="text-transparent bg-clip-text bg-gradient-to-r from-primary via-accent to-secondary animate-glow-pulse">
