@@ -1,0 +1,3 @@
+﻿components/CertificateVault.tsx(7,19): error TS2724: '"react-icons/si"' has no exported member named 'SiIbm'. Did you mean 'SiVim'?
+components/CertificateVault.tsx(7,26): error TS2305: Module '"react-icons/si"' has no exported member 'SiMicrosoft'.
+components/CyberBackground.tsx(115,39): error TS2304: Cannot find name 'spd'.

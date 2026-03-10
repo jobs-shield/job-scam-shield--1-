@@ -21,6 +21,7 @@
   html {
     scroll-behavior: smooth;
     cursor: none;
+    overflow-x: hidden;
   }
 
   body {
@@ -29,10 +30,19 @@
     font-family: 'Inter', sans-serif;
     overflow-x: hidden;
     -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+    max-width: 100vw;
+  }
+
+  /* Mobile: Restore cursor for touch devices */
+  @media (pointer: coarse) {
+    html {
+      cursor: auto;
+    }
   }
 
   ::-webkit-scrollbar {
-    width: 5px;
+    width: 4px;
   }
 
   ::-webkit-scrollbar-track {
@@ -60,7 +70,7 @@
 
 @layer components {
   .section-container {
-    @apply max-w-7xl mx-auto px-8 py-32;
+    @apply max-w-7xl mx-auto px-4 sm:px-6 md:px-8 py-16 sm:py-24 md:py-32;
   }
 
   .glass-card {
@@ -74,8 +84,10 @@
   }
 
   .btn-primary {
-    @apply px-10 py-5 bg-primary text-black font-black uppercase tracking-[0.2em] text-[10px] rounded-2xl hover:bg-transparent hover:text-primary border-2 border-primary transition-all duration-500 flex items-center justify-center gap-3 relative overflow-hidden;
+    @apply px-6 sm:px-10 py-4 sm:py-5 bg-primary text-black font-black uppercase tracking-[0.2em] text-[10px] rounded-2xl hover:bg-transparent hover:text-primary border-2 border-primary transition-all duration-500 flex items-center justify-center gap-3 relative overflow-hidden touch-manipulation;
     box-shadow: 0 0 30px rgba(0, 240, 255, 0.2);
+    min-height: 48px;
+    /* Touch-friendly minimum */
   }
 
   .btn-primary:hover {
@@ -84,11 +96,14 @@
   }
 
   .btn-secondary {
-    @apply px-10 py-5 border-2 border-white/5 bg-white/5 text-white font-black uppercase tracking-[0.2em] text-[10px] rounded-2xl hover:bg-white/10 hover:border-primary/40 transition-all duration-500 flex items-center justify-center gap-3 backdrop-blur-xl;
+    @apply px-6 sm:px-10 py-4 sm:py-5 border-2 border-white/5 bg-white/5 text-white font-black uppercase tracking-[0.2em] text-[10px] rounded-2xl hover:bg-white/10 hover:border-primary/40 transition-all duration-500 flex items-center justify-center gap-3 backdrop-blur-xl touch-manipulation;
+    min-height: 48px;
+    /* Touch-friendly minimum */
   }
 
   .neon-text {
-    @apply text-primary drop-shadow-[0_0_15px_rgba(0, 240, 255, 0.8)];
+    color: rgb(var(--primary));
+    text-shadow: 0 0 15px rgba(0, 240, 255, 0.8);
   }
 
   .text-primary-glow {
@@ -99,8 +114,29 @@
   .cyber-grid-overlay {
     background-image: linear-gradient(rgba(0, 240, 255, 0.05) 1px, transparent 1px),
       linear-gradient(90deg, rgba(0, 240, 255, 0.05) 1px, transparent 1px);
-    background-size: 50px 50px;
+    background-size: 40px 40px;
     @apply absolute inset-0 pointer-events-none opacity-20;
+  }
+
+  /* Certificate Vault Grid Animations */
+  .cert-card-hover {
+    @apply transition-all duration-500 ease-out;
+  }
+
+  .cert-card-hover:hover {
+    @apply -translate-y-2 scale-[1.02];
+  }
+
+  /* Scanline animation for cert cards */
+  .scan-line {
+    background: linear-gradient(transparent 50%, rgba(0, 240, 255, 0.03) 50%);
+    background-size: 100% 4px;
+    animation: scanlines 8s linear infinite;
+  }
+
+  /* Mobile nav link touch targets */
+  .nav-touch-target {
+    @apply min-h-[48px] flex items-center;
   }
 }
 
@@ -121,7 +157,7 @@
     }
 
     50% {
-      transform: translateY(-15px);
+      transform: translateY(-12px);
     }
   }
 
@@ -159,5 +195,86 @@
       transform: translateY(500%);
       opacity: 0;
     }
+  }
+
+  @keyframes scanlines {
+    from {
+      background-position: 0 0;
+    }
+
+    to {
+      background-position: 0 100%;
+    }
+  }
+
+  .animate-network-pulse {
+    animation: network-pulse 3s ease-in-out infinite;
+  }
+
+  @keyframes network-pulse {
+
+    0%,
+    100% {
+      opacity: 0.3;
+      transform: scale(1);
+    }
+
+    50% {
+      opacity: 0.8;
+      transform: scale(1.05);
+    }
+  }
+
+  /* Digital glitch effect */
+  .glitch-text {
+    animation: glitch 4s infinite;
+  }
+
+  @keyframes glitch {
+
+    0%,
+    90%,
+    100% {
+      transform: translate(0);
+      clip-path: none;
+    }
+
+    91% {
+      transform: translate(-2px, 1px);
+      clip-path: polygon(0 15%, 100% 15%, 100% 30%, 0 30%);
+    }
+
+    92% {
+      transform: translate(2px, -1px);
+      clip-path: polygon(0 60%, 100% 60%, 100% 75%, 0 75%);
+    }
+
+    93% {
+      transform: translate(0);
+      clip-path: none;
+    }
+  }
+
+  /* Prevent horizontal overflow */
+  .no-overflow {
+    overflow-x: hidden;
+    max-width: 100vw;
+  }
+
+  /* Responsive typography utilities */
+  .text-responsive-xl {
+    @apply text-4xl sm:text-5xl md:text-6xl lg:text-7xl xl:text-8xl;
+  }
+
+  .text-responsive-lg {
+    @apply text-3xl sm:text-4xl md:text-5xl lg:text-6xl;
+  }
+
+  .text-responsive-md {
+    @apply text-2xl sm:text-3xl md:text-4xl;
+  }
+
+  .text-responsive-hero {
+    @apply text-5xl sm:text-6xl md:text-7xl lg:text-8xl xl:text-[10rem];
   }
 }

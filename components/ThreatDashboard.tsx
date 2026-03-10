@@ -45,7 +45,7 @@ const ThreatDashboard = () => {
     }, []);
 
     return (
-        <div className="w-full grid grid-cols-1 lg:grid-cols-12 gap-8 font-mono">
+        <div className="w-full grid grid-cols-1 lg:grid-cols-12 gap-6 sm:gap-8 font-mono">
 
             {/* Left: Metrics & Logs */}
             <div className="lg:col-span-4 space-y-6">
@@ -108,7 +108,7 @@ const ThreatDashboard = () => {
             </div>
 
             {/* Right: 3D Earth Globe Visualization */}
-            <div className="lg:col-span-8 glass-card p-0 h-[550px] relative overflow-hidden group">
+            <div className="lg:col-span-8 glass-card p-0 h-[350px] sm:h-[450px] lg:h-[550px] relative overflow-hidden group">
                 <div className="absolute top-8 left-8 flex items-center gap-3 z-10">
                     <div className="w-3 h-3 bg-red-500 rounded-full animate-pulse shadow-[0_0_10px_#ef4444]" />
                     <span className="text-[10px] text-white/50 tracking-[0.5em]">GLOBAL_ATTACK_SURFACE_MONITOR</span>
