@@ -71,7 +71,7 @@ const CyberAudio = () => {
     return (
         <button
             onClick={toggleMute}
-            className={`fixed bottom-8 left-8 z-[6000] p-4 rounded-2xl border transition-all duration-500 backdrop-blur-xl flex items-center gap-3 group ${isMuted ? 'border-white/5 bg-white/5 text-gray-500' : 'border-primary/40 bg-primary/10 text-primary shadow-[0_0_20px_rgba(0,240,255,0.2)]'
+            className={`fixed bottom-4 left-4 md:bottom-8 md:left-8 z-[6000] p-3 md:p-4 rounded-xl md:rounded-2xl border transition-all duration-500 backdrop-blur-xl flex items-center gap-3 group ${isMuted ? 'border-white/5 bg-white/5 text-gray-500' : 'border-primary/40 bg-primary/10 text-primary shadow-[0_0_20px_rgba(0,240,255,0.2)]'
                 }`}
             aria-label={isMuted ? "Unmute tactical audio" : "Mute tactical audio"}
         >
@@ -84,7 +84,7 @@ const CyberAudio = () => {
                     </span>
                 )}
             </div>
-            <span className="font-mono text-[9px] tracking-[0.3em] uppercase opacity-0 group-hover:opacity-100 transition-opacity">
+            <span className="hidden md:inline-flex font-mono text-[9px] tracking-[0.3em] uppercase opacity-0 group-hover:opacity-100 transition-opacity">
                 {isMuted ? 'Audio_Off' : 'Audio_Live'}
             </span>
         </button>

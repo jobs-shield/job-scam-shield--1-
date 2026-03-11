@@ -152,7 +152,7 @@ const CyberGlobe = () => {
 
 const EarthGlobe = () => {
     return (
-        <div className="w-full h-full min-h-[500px] flex items-center justify-center relative overflow-hidden bg-black/40 rounded-3xl">
+        <div className="w-full h-full min-h-[350px] sm:min-h-[500px] flex items-center justify-center relative overflow-hidden bg-black/40 rounded-3xl">
             {/* Background Cinematic Lighting */}
             <div className="absolute inset-0 bg-radial-at-c from-primary/5 via-transparent to-transparent opacity-30" />
 

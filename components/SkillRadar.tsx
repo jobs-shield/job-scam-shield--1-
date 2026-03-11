@@ -34,8 +34,8 @@ const SkillRadar = ({ skills, color = "#00f0ff" }: SkillRadarProps) => {
     const polygonPath = points.map(p => `${p.x},${p.y}`).join(" ");
 
     return (
-        <div className="relative flex items-center justify-center group">
-            <svg width={size} height={size} viewBox={`0 0 ${size} ${size}`} className="drop-shadow-[0_0_15px_rgba(0,240,255,0.3)]">
+        <div className="relative flex items-center justify-center group w-full max-w-[350px] mx-auto">
+            <svg width="100%" height="auto" viewBox={`0 0 ${size} ${size}`} className="drop-shadow-[0_0_15px_rgba(0,240,255,0.3)] overflow-visible">
                 {/* Background Web */}
                 {[0.2, 0.4, 0.6, 0.8, 1].map((scale) => {
                     const webPoints = skills.map((_, i) => {
@@ -45,7 +45,7 @@ const SkillRadar = ({ skills, color = "#00f0ff" }: SkillRadarProps) => {
                     }).join(" ");
                     return (
                         <polygon
-                            key={scale}
+                            key={`web-${scale}`}
                             points={webPoints}
                             fill="none"
                             stroke="rgba(255,255,255,0.05)"
@@ -59,7 +59,7 @@ const SkillRadar = ({ skills, color = "#00f0ff" }: SkillRadarProps) => {
                     const angle = i * angleStep - Math.PI / 2;
                     return (
                         <line
-                            key={i}
+                            key={`axis-${i}`}
                             x1={center}
                             y1={center}
                             x2={center + radius * Math.cos(angle)}
@@ -81,12 +81,13 @@ const SkillRadar = ({ skills, color = "#00f0ff" }: SkillRadarProps) => {
                     stroke={color}
                     strokeWidth="2"
                     className="origin-center"
+                    style={{ transformOrigin: `${center}px ${center}px` }}
                 />
 
                 {/* Data Points */}
                 {points.map((p, i) => (
                     <circle
-                        key={i}
+                        key={`point-${i}`}
                         cx={p.x}
                         cy={p.y}
                         r="3"
@@ -94,27 +95,35 @@ const SkillRadar = ({ skills, color = "#00f0ff" }: SkillRadarProps) => {
                         className="animate-pulse"
                     />
                 ))}
-            </svg>
 
-            {/* Labels */}
-            {points.map((p, i) => {
-                const angle = i * angleStep - Math.PI / 2;
-                const tx = center + (radius + 30) * Math.cos(angle);
-                const ty = center + (radius + 20) * Math.sin(angle);
-                return (
-                    <div
-                        key={i}
-                        className="absolute font-mono text-[9px] text-gray-400 uppercase tracking-tighter"
-                        style={{
-                            left: `${(tx / size) * 100}%`,
-                            top: `${(ty / size) * 100}%`,
-                            transform: 'translate(-50%, -50%)'
-                        }}
-                    >
-                        {p.label}
-                    </div>
-                );
-            })}
+                {/* Labels */}
+                {points.map((p, i) => {
+                    const angle = i * angleStep - Math.PI / 2;
+                    const rText = radius + 25; // Push label a bit outside
+                    const tx = center + rText * Math.cos(angle);
+                    const ty = center + rText * Math.sin(angle);
+
+                    // Determine text anchor based on angle to avoid overlap
+                    let anchor = "middle";
+                    if (Math.abs(Math.cos(angle)) > 0.1) {
+                        anchor = Math.cos(angle) > 0 ? "start" : "end";
+                    }
+
+                    return (
+                        <text
+                            key={`label-${i}`}
+                            x={tx}
+                            y={ty}
+                            textAnchor={anchor}
+                            alignmentBaseline="middle"
+                            fill="#9ca3af"
+                            className="text-[9px] md:text-[10px] uppercase font-mono tracking-tighter"
+                        >
+                            {p.label}
+                        </text>
+                    );
+                })}
+            </svg>
         </div>
     );
 };

@@ -109,9 +109,10 @@ const ThreatDashboard = () => {
 
             {/* Right: 3D Earth Globe Visualization */}
             <div className="lg:col-span-8 glass-card p-0 h-[350px] sm:h-[450px] lg:h-[550px] relative overflow-hidden group">
-                <div className="absolute top-8 left-8 flex items-center gap-3 z-10">
-                    <div className="w-3 h-3 bg-red-500 rounded-full animate-pulse shadow-[0_0_10px_#ef4444]" />
-                    <span className="text-[10px] text-white/50 tracking-[0.5em]">GLOBAL_ATTACK_SURFACE_MONITOR</span>
+                <div className="absolute top-4 left-4 sm:top-8 sm:left-8 flex items-center gap-2 sm:gap-3 z-10 w-2/3">
+                    <div className="w-2 h-2 sm:w-3 sm:h-3 bg-red-500 rounded-full animate-pulse shadow-[0_0_10px_#ef4444] shrink-0" />
+                    <span className="hidden sm:inline-block text-[10px] text-white/50 tracking-[0.5em]">GLOBAL_ATTACK_SURFACE_MONITOR</span>
+                    <span className="sm:hidden text-[8px] text-white/50 tracking-[0.2em] break-words">ATTACK_SURFACE</span>
                 </div>
 
                 <div className="w-full h-full">

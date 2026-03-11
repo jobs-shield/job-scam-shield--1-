@@ -439,12 +439,13 @@ const CertificateVault = () => {
             </div>
 
             {/* Filter Tabs */}
-            <div className="flex flex-wrap gap-2 mb-8">
+            <div className="flex overflow-x-auto pb-4 -mx-4 px-4 sm:mx-0 sm:px-0 sm:pb-0 sm:flex-wrap sm:overflow-visible gap-2 mb-4 sm:mb-8" style={{ scrollbarWidth: 'none', msOverflowStyle: 'none' }}>
+                <style dangerouslySetInnerHTML={{ __html: `::-webkit-scrollbar { display: none; }` }} />
                 {levels.map(level => (
                     <button
                         key={level}
                         onClick={() => setFilter(level)}
-                        className={`px-3 py-1.5 rounded-xl border text-[9px] sm:text-[10px] font-mono uppercase tracking-widest transition-all duration-300 touch-manipulation min-h-[36px] ${filter === level
+                        className={`shrink-0 whitespace-nowrap px-3 py-1.5 rounded-xl border text-[9px] sm:text-[10px] font-mono uppercase tracking-widest transition-all duration-300 touch-manipulation min-h-[36px] ${filter === level
                             ? "bg-primary/20 border-primary/50 text-primary"
                             : "bg-white/5 border-white/5 text-gray-600 hover:text-gray-300 hover:border-white/20"}`}
                     >

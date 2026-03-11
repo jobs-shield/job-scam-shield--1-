@@ -81,9 +81,9 @@ const PROJECTS_DATA = [
     },
 ];
 
-const OCT_GEO = new THREE.OctahedronGeometry(0.7, 0);
+const OCT_GEO = new THREE.OctahedronGeometry(1.0, 0);
 
-function Node({ project, onSelect, onHover }: { project: any; onSelect: (p: any) => void; onHover: (h: boolean) => void }) {
+function Node({ project, onSelect, onHover, isMobile }: { project: any; onSelect: (p: any) => void; onHover: (h: boolean) => void; isMobile: boolean }) {
     const [hovered, setHovered] = useState(false);
     const meshRef = useRef<THREE.Mesh>(null!);
 
@@ -91,7 +91,8 @@ function Node({ project, onSelect, onHover }: { project: any; onSelect: (p: any)
         if (!meshRef.current) return;
         meshRef.current.rotation.x += 0.005;
         meshRef.current.rotation.y += 0.008;
-        const targetScale = hovered ? 1.4 : 1;
+        const baseScale = isMobile ? 1.5 : 1;
+        const targetScale = hovered ? baseScale * 1.4 : baseScale;
         meshRef.current.scale.lerp(new THREE.Vector3(targetScale, targetScale, targetScale), 0.1);
     });
 
@@ -116,12 +117,12 @@ function Node({ project, onSelect, onHover }: { project: any; onSelect: (p: any)
                     />
                 </mesh>
                 <Text
-                    position={[0, 1.2, 0]}
-                    fontSize={0.25}
+                    position={[0, isMobile ? 1.8 : 1.4, 0]}
+                    fontSize={isMobile ? 0.4 : 0.3}
                     color="white"
                     anchorX="center"
                     anchorY="middle"
-                    fillOpacity={hovered ? 1 : 0.4}
+                    fillOpacity={hovered ? 1 : 0.6}
                 >
                     {project.title}
                 </Text>
@@ -135,7 +136,7 @@ function Connections() {
     const linePoints = useMemo(() => {
         const lines = [];
         for (let i = 0; i < PROJECTS_DATA.length; i++) {
-            for (let j = i + 1; j < PROJECTS_DATA.length; j++) {
+            for (let j = i + 0 + 1; j < PROJECTS_DATA.length; j++) {
                 lines.push({
                     points: [PROJECTS_DATA[i].pos as [number, number, number], PROJECTS_DATA[j].pos as [number, number, number]],
                     color: PROJECTS_DATA[i].color
@@ -164,21 +165,28 @@ function Connections() {
 const ProjectNetwork = () => {
     const [selectedProject, setSelectedProject] = useState<any>(null);
     const [isHovering, setIsHovering] = useState(false);
-    const isMobile = typeof window !== 'undefined' ? window.innerWidth < 768 : false;
+    const [isMobile, setIsMobile] = useState(false);
+
+    React.useEffect(() => {
+        setIsMobile(window.innerWidth < 768);
+        const handleResize = () => setIsMobile(window.innerWidth < 768);
+        window.addEventListener('resize', handleResize);
+        return () => window.removeEventListener('resize', handleResize);
+    }, []);
 
     return (
         <div className="h-[500px] md:h-[600px] w-full relative group">
             <Canvas
                 shadows={false}
                 dpr={[1, 1.5]}
-                gl={{ antialias: !isMobile, powerPreference: "high-performance" }}
+                gl={{ antialias: false, powerPreference: "high-performance" }}
             >
-                <PerspectiveCamera makeDefault position={[0, 0, 10]} fov={50} />
+                <PerspectiveCamera makeDefault position={[0, 0, isMobile ? 14 : 10]} fov={50} />
                 <ambientLight intensity={1.5} />
                 <Stars radius={15} depth={50} count={isMobile ? 1000 : 2000} factor={4} saturation={0} fade speed={1} />
-                <group>
+                <group scale={isMobile ? 0.7 : 1}>
                     {PROJECTS_DATA.map((p) => (
-                        <Node key={p.id} project={p} onSelect={setSelectedProject} onHover={setIsHovering} />
+                        <Node key={p.id} project={p} onSelect={setSelectedProject} onHover={setIsHovering} isMobile={isMobile} />
                     ))}
                     <Connections />
                 </group>

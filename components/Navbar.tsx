@@ -37,12 +37,12 @@ const Navbar = () => {
 
     return (
         <>
-            <nav className={`fixed top-0 left-0 w-full z-[100] transition-all duration-500 ${scrolled ? "py-2 sm:py-4" : "py-4 sm:py-8"}`}>
+            <nav className={`fixed top-0 left-0 w-full z-[9000] transition-all duration-500 ${scrolled ? "py-2 sm:py-4" : "py-4 sm:py-8"}`}>
                 <div className="max-w-7xl mx-auto px-4 sm:px-6">
                     <div
                         className={`relative flex justify-between items-center px-4 sm:px-8 py-3 rounded-2xl transition-all duration-500 ${scrolled
-                            ? "bg-black/70 backdrop-blur-2xl border border-white/5 shadow-2xl"
-                            : "bg-transparent"}`}
+                            ? "bg-[#020202]/95 backdrop-blur-2xl border border-white/5 shadow-2xl"
+                            : "bg-[#020202]/60 sm:bg-transparent backdrop-blur-sm sm:backdrop-blur-none"}`}
                     >
                         {/* Logo */}
                         <Link
@@ -108,7 +108,7 @@ const Navbar = () => {
                         animate={{ opacity: 1, x: 0 }}
                         exit={{ opacity: 0, x: "100%" }}
                         transition={{ type: "spring", damping: 28, stiffness: 220 }}
-                        className="fixed inset-0 bg-[#020202]/98 backdrop-blur-2xl z-[99] md:hidden flex flex-col"
+                        className="fixed inset-0 bg-[#020202]/98 backdrop-blur-3xl z-[9000] md:hidden flex flex-col"
                         role="dialog"
                         aria-modal="true"
                         aria-label="Mobile Navigation Menu"
