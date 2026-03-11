@@ -104,7 +104,7 @@ const SkillRadar = ({ skills, color = "#00f0ff" }: SkillRadarProps) => {
                     const ty = center + rText * Math.sin(angle);
 
                     // Determine text anchor based on angle to avoid overlap
-                    let anchor = "middle";
+                    let anchor: "start" | "middle" | "end" = "middle";
                     if (Math.abs(Math.cos(angle)) > 0.1) {
                         anchor = Math.cos(angle) > 0 ? "start" : "end";
                     }
