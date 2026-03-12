@@ -6,45 +6,76 @@ import { HiTerminal, HiPlay, HiCode, HiShieldExclamation } from "react-icons/hi"
 
 const LABORATORY_SCRIPTS = [
     {
-        id: "port_scan",
-        name: "net_recon.py",
-        code: `import socket
+        id: "packet_sniff",
+        name: "packet_infosec.py",
+        code: `from scapy.all import sniff, IP, TCP
 
-def scan(host, ports):
-    for port in ports:
-        s = socket.socket()
-        if s.connect_ex((host, port)) == 0:
-            print(f"[*] Port {port} OPEN")
-        s.close()
+def packet_callback(packet):
+    if packet.haslayer(IP):
+        ip_src = packet[IP].src
+        ip_dst = packet[IP].dst
+        print(f"[!] IP: {ip_src} -> {ip_dst}")
+        if packet.haslayer(TCP):
+            print(f"[*] Port: {packet[TCP].sport} -> {packet[TCP].dport}")
 
-scan('127.0.0.1', [21, 22, 80, 443])`,
+print("[*] Monitoring eth0 for suspicious traffic...")
+sniff(iface="eth0", prn=packet_callback, count=10)`,
         output: [
-            "[!] INITIALIZING NETWORK RECONNAISSANCE...",
-            "[*] TARGET: 127.0.0.1",
-            "[*] Port 22 OPEN (SSH)",
-            "[*] Port 80 OPEN (HTTP)",
-            "[*] Port 443 OPEN (HTTPS)",
-            "[+] RECON COMPLETE. 3 VULNERABILITIES IDENTIFIED."
+            "[!] INITIALIZING PACKET SNIFFER (scapy-engine)...",
+            "[*] INTERFACE: eth0 [PROMISCUOUS_MODE]",
+            "[!] IP: 192.168.1.10 -> 10.0.0.1",
+            "[*] Port: 44321 -> 80 (HTTP)",
+            "[!] IP: 10.0.0.1 -> 192.168.1.10",
+            "[*] Port: 80 -> 44321 (ACK)",
+            "[+] ANOMALY DETECTED: UNUSUAL OUTBOUND VOLUME.",
+            "[+] SCAN_COMPLETE. LOGS DEPOSITED TO /tmp/traffic_dump.pcap"
         ]
     },
     {
-        id: "hash_crack",
-        name: "brute_force.py",
-        code: `import hashlib
+        id: "wifi_deauth",
+        name: "deauth_monitor.sh",
+        code: `# WiFi Deauthentication Guard
+# Scanning for 802.11 management frames
 
-target = "5d41402abc4b2a76b9719d911017c592"
-wordlist = ["admin", "password", "123456", "hello"]
+interface="wlan0mon"
+target_bssid="88:A1:B2:C3:D4:E5"
 
-for word in wordlist:
-    if hashlib.md5(word.encode()).hexdigest() == target:
-        print(f"[+] HASH CRACKED: {word}")`,
+echo "[!] Monitoring $interface for Deauth Flooding..."
+aireplay-ng --deauth 100 -a $target_bssid $interface`,
         output: [
-            "[!] STARTING BRUTE FORCE ATTACK...",
-            "[*] TRYING: admin... FAIL",
-            "[*] TRYING: password... FAIL",
-            "[*] TRYING: 123456... FAIL",
-            "[*] TRYING: hello... MATCH FOUND!",
-            "[+] HASH CRACKED: 'hello' (MD5)"
+            "[!] BOOTING AIRMON-NG UTILITIES...",
+            "[*] MONITOR MODE ENABLED ON wlan0mon",
+            "[*] TARGET BSSID: 88:A1:B2:C3:D4:E5",
+            "[!] ALERT: HIGH FREQUENCY DEAUTH FRAMES DETECTED",
+            "[*] ORIGIN: 00:DE:AD:BE:EF:00 [EXTERNAL]",
+            "[+] MITIGATION: CHANNEL HOPPING INITIATED",
+            "[+] THREAT NEUTRALIZED."
+        ]
+    },
+    {
+        id: "sqli_filter",
+        name: "sqli_shield.py",
+        code: `# SQL Injection Filter Test
+import re
+
+def validate_input(user_input):
+    patterns = ["'", "--", "DROP", "UNION", "SELECT", "OR '1'='1'"]
+    for p in patterns:
+        if re.search(p, user_input, re.IGNORECASE):
+            return False
+    return True
+
+payload = "' OR 1=1 --"
+if not validate_input(payload):
+    print("[!] SQLI ATTEMPT BLOCKED")`,
+        output: [
+            "[!] INITIALIZING SQLI_SHIELD_V2...",
+            "[*] ANALYZING INBOUND PAYLOAD: \"' OR 1=1 --\"",
+            "[*] PATTERN MATCH FOUND: [OR '1'='1']",
+            "[*] PATTERN MATCH FOUND: [--]",
+            "[!] CRITICAL: MALICIOUS SQL SYNTAX DETECTED",
+            "[+] STATUS: REQUEST DROPPED & IP LOGGED.",
+            "[+] FIREWALL_SYNC: COMPLETE."
         ]
     }
 ];
@@ -91,7 +122,7 @@ const CyberLab = () => {
                         CYBER <span className="text-primary-glow">LAB</span>
                     </h2>
                     <p className="text-gray-500 max-w-xl text-base sm:text-lg md:text-xl font-light leading-relaxed">
-                        Interactive security simulations. Execute researcher scripts in a secure virtual environment.
+                        Security Research Sandbox. Interactive modules showcasing automated threat detection, network reconnaissance, and protocol analysis.
                     </p>
                 </motion.div>
 

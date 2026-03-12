@@ -1,8 +1,9 @@
 "use client";
 
-import React from "react";
 import { motion } from "framer-motion";
 import MissionResume from "@/components/MissionResume";
+import { DecryptedText } from "@/components/DecryptedText";
+import { BiometricButton } from "@/components/BiometricButton";
 
 const STATS = [
     { label: "LEARNING_PATH", val: "MSc_STUDENT", color: "text-primary" },
@@ -36,10 +37,12 @@ const Hero = () => {
 
                         {/* Main Name */}
                         <h1 className="text-responsive-hero font-black tracking-tighter mb-6 sm:mb-8 leading-[1.1] sm:leading-[0.85] mix-blend-lighten">
-                            <span className="opacity-80 block sm:inline">VIJAY BHAGWAT</span>{" "}
+                            <span className="opacity-80 block sm:inline">
+                                <DecryptedText text="VIJAY BHAGWAT" />
+                            </span>{" "}
                             <br className="hidden sm:block" />
                             <span className="text-transparent bg-clip-text bg-gradient-to-r from-primary via-accent to-secondary animate-glow-pulse">
-                                UKANDE
+                                <DecryptedText text="UKANDE" />
                             </span>
                         </h1>
 
@@ -48,13 +51,19 @@ const Hero = () => {
                             initial={{ opacity: 0 }}
                             animate={{ opacity: 1 }}
                             transition={{ delay: 0.8 }}
-                            className="flex flex-col sm:flex-row flex-wrap justify-center items-center gap-2 sm:gap-x-6 sm:gap-y-2 mb-8 sm:mb-10 text-base sm:text-xl md:text-2xl font-medium text-gray-500/80"
+                            className="flex flex-col sm:flex-row flex-wrap justify-center items-center gap-2 sm:gap-x-6 sm:gap-y-2 mb-8 sm:mb-10 text-base sm:text-lg md:text-xl font-medium text-gray-500/80 font-mono"
                         >
-                            <span className="hover:text-primary transition-colors cursor-default">Cybersecurity Analyst</span>
+                            <span className="hover:text-primary transition-colors cursor-default">
+                                <DecryptedText text="Cybersecurity Analyst" />
+                            </span>
                             <span className="text-primary/30 hidden sm:inline">•</span>
-                            <span className="hover:text-primary transition-colors cursor-default">Security Researcher</span>
+                            <span className="hover:text-primary transition-colors cursor-default">
+                                <DecryptedText text="Security Researcher" />
+                            </span>
                             <span className="text-primary/30 hidden sm:inline">•</span>
-                            <span className="hover:text-primary transition-colors cursor-default">Founder – TrustLayer</span>
+                            <span className="hover:text-primary transition-colors cursor-default">
+                                <DecryptedText text="Founder – TrustLayer" />
+                            </span>
                         </motion.div>
 
                         {/* Description */}
@@ -67,17 +76,13 @@ const Hero = () => {
                         </p>
 
                         {/* CTA Buttons */}
-                        <div className="flex flex-col sm:flex-row items-center justify-center gap-4 sm:gap-8 px-4 sm:px-0">
-                            <motion.a
-                                href="#projects"
-                                whileHover={{ scale: 1.05, y: -5 }}
-                                whileTap={{ scale: 0.98 }}
-                                className="btn-primary w-full sm:w-auto px-8 sm:px-12 group"
-                                aria-label="View security projects"
-                            >
-                                INITIATE_SCAN
-                                <div className="absolute inset-0 bg-gradient-to-r from-transparent via-white/10 to-transparent -translate-x-full group-hover:translate-x-full transition-transform duration-1000" />
-                            </motion.a>
+                        <div className="flex flex-col sm:flex-row items-center justify-center gap-10 sm:gap-8 px-4 sm:px-0">
+                            <BiometricButton 
+                                label="INITIATE_SCAN" 
+                                onComplete={() => {
+                                    document.getElementById('projects')?.scrollIntoView({ behavior: 'smooth' });
+                                }} 
+                            />
                             <div className="w-full sm:w-auto">
                                 <MissionResume />
                             </div>

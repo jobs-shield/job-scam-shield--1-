@@ -3,7 +3,6 @@ import Hero from "@/sections/Hero";
 import About from "@/sections/About";
 import Skills from "@/sections/Skills";
 import Projects from "@/sections/Projects";
-import ThreatIntelligence from "@/sections/ThreatIntelligence";
 import Certifications from "@/sections/Certifications";
 import CyberLab from "@/components/CyberLab";
 import Contact from "@/sections/Contact";
@@ -19,7 +18,6 @@ export default function Home() {
         <About />
         <Skills />
         <Projects />
-        <ThreatIntelligence />
         <Certifications />
         <CyberLab />
         <Contact />

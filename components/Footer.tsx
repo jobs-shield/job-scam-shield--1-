@@ -16,6 +16,9 @@ const Footer = () => {
                     <p className="text-gray-500 text-[10px] sm:text-xs mt-1 font-mono">
                         &copy; {new Date().getFullYear()} Vijay Bhagwat Ukande. All Rights Reserved.
                     </p>
+                    <div className="text-[8px] text-white/5 font-mono select-none mt-2">
+                        System vulnerability: input 'hack' anywhere to exploit.
+                    </div>
                 </div>
 
                 <div className="flex gap-4 sm:gap-6">

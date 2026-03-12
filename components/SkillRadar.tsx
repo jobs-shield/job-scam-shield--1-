@@ -35,7 +35,14 @@ const SkillRadar = ({ skills, color = "#00f0ff" }: SkillRadarProps) => {
 
     return (
         <div className="relative flex items-center justify-center group w-full max-w-[350px] mx-auto">
-            <svg width="100%" height="auto" viewBox={`0 0 ${size} ${size}`} className="drop-shadow-[0_0_15px_rgba(0,240,255,0.3)] overflow-visible">
+            <svg 
+                role="img" 
+                aria-label="Radar chart showing technical skill proficiencies"
+                width="100%" 
+                height="auto" 
+                viewBox={`0 0 ${size} ${size}`} 
+                className="drop-shadow-[0_0_15px_rgba(0,240,255,0.3)] overflow-visible"
+            >
                 {/* Background Web */}
                 {[0.2, 0.4, 0.6, 0.8, 1].map((scale) => {
                     const webPoints = skills.map((_, i) => {
@@ -124,6 +131,18 @@ const SkillRadar = ({ skills, color = "#00f0ff" }: SkillRadarProps) => {
                     );
                 })}
             </svg>
+
+            {/* Screen Reader Optimized Table */}
+            <div className="sr-only">
+                <h3>Technical Skill Proficiencies</h3>
+                <ul>
+                    {skills.map((skill, i) => (
+                        <li key={`sr-skill-${i}`}>
+                            {skill.label}: {skill.value} percent
+                        </li>
+                    ))}
+                </ul>
+            </div>
         </div>
     );
 };

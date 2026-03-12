@@ -14,7 +14,7 @@ export const metadata: Metadata = {
   openGraph: {
     title: "Vijay Ukande – Cybersecurity Portfolio",
     description: "Interactive cybersecurity portfolio showcasing vulnerability research, security projects, certifications, and technical skills.",
-    url: "https://vukande-portfolio.vercel.app", // Placeholder, user should update if needed
+    url: "https://vijay-ukande.netlify.app",
     siteName: "Vijay Ukande Portfolio",
     images: [
       {

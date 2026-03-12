@@ -7,6 +7,8 @@ import {
 } from "react-icons/si";
 import { FaShieldAlt, FaNetworkWired } from "react-icons/fa";
 import SkillRadar from "@/components/SkillRadar";
+import { DecryptedText } from "@/components/DecryptedText";
+import { DecryptingProgressBar } from "@/components/DecryptingProgressBar";
 
 const skillCategories = [
     {
@@ -87,8 +89,8 @@ const Skills = () => {
                             Capabilities_Matrix
                         </p>
                         <h2 className="text-responsive-lg font-black mb-6 sm:mb-8 leading-none">
-                            TECHNICAL <br />
-                            <span className="text-primary-glow">ARSENAL</span>
+                            <DecryptedText text="TECHNICAL" delay={100} /> <br />
+                            <span className="text-primary-glow"><DecryptedText text="ARSENAL" delay={500} /></span>
                         </h2>
                         <div className="h-1 sm:h-1.5 w-24 sm:w-32 bg-gradient-to-r from-primary via-accent to-secondary mx-auto mb-6 sm:mb-10 rounded-full" />
                         <p className="text-gray-500 max-w-xl sm:max-w-2xl mx-auto text-base sm:text-lg md:text-xl font-light leading-relaxed px-2">
@@ -141,20 +143,17 @@ const Skills = () => {
                                     />
                                 </div>
 
-                                {/* Skill List */}
-                                <ul className="space-y-3 sm:space-y-4 flex-grow relative z-10">
-                                    {category.skills.map((skill) => (
-                                        <li key={skill} className="flex items-center gap-3 sm:gap-4 group/item">
-                                            <div className="relative flex h-1.5 w-1.5 shrink-0">
-                                                <div className="absolute inset-0 bg-primary rounded-full animate-ping opacity-20" />
-                                                <div className="relative h-1.5 w-1.5 rounded-full bg-primary/40 group-hover/item:bg-primary transition-colors" />
-                                            </div>
-                                            <span className="text-sm sm:text-base text-gray-400 font-light group-hover/item:text-white transition-colors">
-                                                {skill}
-                                            </span>
-                                        </li>
+                                {/* Detailed Skill Progress */}
+                                <div className="space-y-5 flex-grow relative z-10">
+                                    {category.stats.map((stat) => (
+                                        <DecryptingProgressBar 
+                                            key={stat.label} 
+                                            label={stat.label} 
+                                            targetValue={stat.value}
+                                            color={index === 1 ? 'bg-purple-500' : index === 2 ? 'bg-emerald-500' : 'bg-primary'}
+                                        />
                                     ))}
-                                </ul>
+                                </div>
 
                                 {/* Progress Bar */}
                                 <div className="mt-8 sm:mt-10 pt-4 sm:pt-6 border-t border-white/5">

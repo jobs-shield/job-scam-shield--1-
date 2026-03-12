@@ -10,10 +10,9 @@ gsap.registerPlugin(ScrollToPlugin);
 
 const NAV_ITEMS = [
     { id: "about", label: "ABOUT", angle: -90 },
-    { id: "skills", label: "SKILLS", angle: -54 },
-    { id: "projects", label: "NETWORK", angle: -18 },
-    { id: "threat-intelligence", label: "THREAT", angle: 18 },
-    { id: "certifications", label: "VAULT", angle: 54 },
+    { id: "skills", label: "SKILLS", angle: -45 },
+    { id: "projects", label: "NETWORK", angle: 0 },
+    { id: "certifications", label: "VAULT", angle: 45 },
     { id: "contact", label: "LINK", angle: 90 },
 ];
 

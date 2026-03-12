@@ -5,7 +5,7 @@ import { gsap } from "gsap";
 import { HiTerminal, HiX } from "react-icons/hi";
 
 const COMMANDS = {
-    help: "Available commands: help, about, skills, projects, certifications, contact, clear",
+    help: "Available commands: help, about, skills, projects, certifications, contact, clear, start hack-os. \n[CLASSIFIED HINT: if you're stuck, just type 'hack' anywhere on the visual interface to see what happens.]",
     about: `Vijay Bhagwat Ukande - Cybersecurity Aspirant & Dedicated Student.
 Founder of TrustLayer (Educational Initiative).
 Education: BSc Computer Science (Rajmata Jijau Mahavidyalaya) | MSc Cybersecurity (MIT ACSC, Pune - Currently Enrolled).
@@ -37,6 +37,7 @@ GitHub: github.com/vijay-ukande`,
 
 const CyberTerminal = () => {
     const [isOpen, setIsOpen] = useState(false);
+    const [isOSMode, setIsOSMode] = useState(false);
     const [input, setInput] = useState("");
     const [history, setHistory] = useState<{ type: "input" | "output"; text: string }[]>([
         { type: "output", text: "Welcome to TrustLayer Secure Terminal v1.0.4" },
@@ -57,7 +58,10 @@ const CyberTerminal = () => {
             inputRef.current?.focus();
 
             const handleEscape = (e: KeyboardEvent) => {
-                if (e.key === "Escape") setIsOpen(false);
+                if (e.key === "Escape") {
+                    setIsOpen(false);
+                    setIsOSMode(false);
+                }
             };
             window.addEventListener("keydown", handleEscape);
             return () => window.removeEventListener("keydown", handleEscape);
@@ -79,6 +83,21 @@ const CyberTerminal = () => {
 
         if (cleanCmd === "") {
             setHistory(newHistory);
+            return;
+        }
+
+        if (cleanCmd === "start hack-os") {
+            setHistory([...newHistory, { type: "output", text: "INITIATING FULL SYSTEM OVERRIDE..." }]);
+            setTimeout(() => {
+                setIsOSMode(true);
+                setHistory([{ type: "output", text: "ROOT SHELL ACCESS GRANTED. FULL OS OVERRIDE ACTIVE. Type 'exit' to return." }]);
+            }, 800);
+            return;
+        }
+
+        if (cleanCmd === "exit" && isOSMode) {
+            setIsOSMode(false);
+            setHistory([...newHistory, { type: "output", text: "Closing OS mode..." }]);
             return;
         }
 
@@ -117,18 +136,24 @@ const CyberTerminal = () => {
                     ref={terminalRef}
                     role="dialog"
                     aria-label="Cyber Security Terminal"
-                    className="fixed bottom-28 right-8 w-[90vw] md:w-[600px] h-[400px] bg-background/95 backdrop-blur-xl border border-primary/30 rounded-lg shadow-2xl z-50 flex flex-col overflow-hidden font-mono"
+                    className={
+                        isOSMode 
+                            ? "fixed inset-0 w-full h-full bg-[#020202] z-[99999] flex flex-col font-mono text-primary"
+                            : "fixed bottom-28 right-8 w-[90vw] md:w-[600px] h-[400px] bg-background/95 backdrop-blur-xl border border-primary/30 rounded-lg shadow-2xl z-50 flex flex-col overflow-hidden font-mono"
+                    }
                 >
                     {/* Header */}
-                    <div className="bg-primary/10 px-4 py-2 border-b border-primary/20 flex justify-between items-center">
+                    <div className={`${isOSMode ? 'bg-black border-b border-primary/40' : 'bg-primary/10 border-b border-primary/20'} px-4 py-2 flex justify-between items-center`}>
                         <div className="flex items-center gap-2">
                             <div className="w-3 h-3 rounded-full bg-red-500/50" />
                             <div className="w-3 h-3 rounded-full bg-yellow-500/50" />
                             <div className="w-3 h-3 rounded-full bg-green-500/50" />
-                            <span className="ml-2 text-xs text-primary/70 uppercase tracking-widest pt-0.5">Secure_Terminal_v1.0.4</span>
+                            <span className="ml-2 text-xs text-primary/70 uppercase tracking-widest pt-0.5">
+                                {isOSMode ? 'TRUSTLAYER_OS_ROOT' : 'Secure_Terminal_v1.0.4'}
+                            </span>
                         </div>
                         <button
-                            onClick={() => setIsOpen(false)}
+                            onClick={() => { setIsOpen(false); setIsOSMode(false); }}
                             aria-label="Close Terminal"
                             className="p-1 hover:text-primary transition-colors"
                         >
@@ -138,7 +163,7 @@ const CyberTerminal = () => {
 
                     {/* Output Area */}
                     <div
-                        className="flex-1 overflow-y-auto p-4 text-sm scrollbar-hide"
+                        className={`flex-1 overflow-y-auto p-4 ${isOSMode ? 'text-base sm:text-lg' : 'text-sm'} scrollbar-hide`}
                         aria-live="polite"
                     >
                         {history.map((line, i) => (
@@ -159,7 +184,7 @@ const CyberTerminal = () => {
                     </div>
 
                     {/* Input Area */}
-                    <label className="p-4 bg-primary/5 border-t border-primary/10 flex gap-2 items-center cursor-text">
+                    <label className={`p-4 ${isOSMode ? 'bg-black border-t border-primary/40' : 'bg-primary/5 border-t border-primary/10'} flex gap-2 items-center cursor-text`}>
                         <span className="text-accent text-sm">visitor@cyber-system:~$</span>
                         <input
                             ref={inputRef}
@@ -167,7 +192,7 @@ const CyberTerminal = () => {
                             value={input}
                             onChange={(e) => setInput(e.target.value)}
                             onKeyDown={onKeyDown}
-                            className="flex-1 bg-transparent border-none outline-none text-white text-sm"
+                            className={`flex-1 bg-transparent border-none outline-none text-white ${isOSMode ? 'text-base sm:text-lg' : 'text-sm'}`}
                             autoFocus
                             aria-label="Terminal Input"
                         />

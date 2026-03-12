@@ -65,19 +65,7 @@ const CyberCursor = () => {
                     Y:{mousePos.y.toString().padStart(4, '0')}
                 </div>
 
-                {/* Scanning Status */}
-                <AnimatePresence>
-                    {isPointer && (
-                        <motion.div
-                            initial={{ opacity: 0, x: -20 }}
-                            animate={{ opacity: 1, x: 0 }}
-                            exit={{ opacity: 0, x: 20 }}
-                            className="absolute -top-10 left-6 font-mono text-[8px] text-accent font-bold tracking-widest uppercase"
-                        >
-                            [ LINK_AVAILABLE ]
-                        </motion.div>
-                    )}
-                </AnimatePresence>
+                {/* Scanning Status - Removed per request */}
             </motion.div>
 
             {/* Trailing Ghost Effect */}

@@ -4,7 +4,7 @@ import React, { useState, useEffect, useRef } from "react";
 import { gsap } from "gsap";
 import { motion } from "framer-motion";
 
-const BOOT_SEQUENCE = [
+const DEFAULT_BOOT_SEQUENCE = [
     "Initializing Secure Interface...",
     "Loading Threat Analysis Modules...",
     "Connecting to Security Network...",
@@ -38,10 +38,31 @@ const SystemBootIntro = ({ onComplete }: { onComplete: () => void }) => {
     const [completedMessages, setCompletedMessages] = useState<string[]>([]);
     const [showIntro, setShowIntro] = useState(true);
     const [isMounting, setIsMounting] = useState(true);
+    const [bootSequence, setBootSequence] = useState(DEFAULT_BOOT_SEQUENCE);
     const introRef = useRef<HTMLDivElement>(null);
     const isTransitioning = useRef(false);
 
     useEffect(() => {
+        // Fetch OSINT Geolocation Data
+        const fetchGeoData = async () => {
+            try {
+                const res = await fetch("https://get.geojs.io/v1/ip/geo.json");
+                const data = await res.json();
+                if (data.city && data.country) {
+                    setBootSequence([
+                        "Initializing Secure Interface...",
+                        `Incoming connection flagged from [${data.city}, ${data.country}]. Tracking IP...`,
+                        "Loading Threat Analysis Modules...",
+                        "Authenticating Visitor...",
+                        "Running Decryption Algorithms...",
+                        "Access Granted."
+                    ]);
+                }
+            } catch (e) {
+                console.error("Geo locator bypassed");
+            }
+        };
+        fetchGeoData();
         // Check session storage with a fresh version key v6
         const hasSeenIntro = sessionStorage.getItem("system_boot_v6");
         if (hasSeenIntro === "true") {
@@ -61,12 +82,12 @@ const SystemBootIntro = ({ onComplete }: { onComplete: () => void }) => {
     const handleLineComplete = () => {
         if (isTransitioning.current) return;
 
-        if (activeMessageIndex < BOOT_SEQUENCE.length - 1) {
-            setCompletedMessages(prev => [...prev, BOOT_SEQUENCE[activeMessageIndex]]);
+        if (activeMessageIndex < bootSequence.length - 1) {
+            setCompletedMessages(prev => [...prev, bootSequence[activeMessageIndex]]);
             setActiveMessageIndex(prev => prev + 1);
         } else {
             // "Access Granted" line finished
-            setCompletedMessages(prev => [...prev, BOOT_SEQUENCE[activeMessageIndex]]);
+            setCompletedMessages(prev => [...prev, bootSequence[activeMessageIndex]]);
             isTransitioning.current = true;
             // Wait a bit longer on "Access Granted" for impact
             setTimeout(handleFinalTransition, 1200);
@@ -138,11 +159,11 @@ const SystemBootIntro = ({ onComplete }: { onComplete: () => void }) => {
                         </div>
                     ))}
 
-                    {activeMessageIndex < BOOT_SEQUENCE.length && (
+                    {activeMessageIndex < bootSequence.length && (
                         <div className="boot-line text-sm md:text-base flex gap-8 text-primary">
                             <span className="text-primary/20 w-12 font-bold">[{activeMessageIndex.toString().padStart(2, '0')}]</span>
                             <TypingLine
-                                text={BOOT_SEQUENCE[activeMessageIndex]}
+                                text={bootSequence[activeMessageIndex]}
                                 onComplete={handleLineComplete}
                             />
                             <span className="w-3 h-6 bg-primary animate-pulse inline-block align-middle" />
@@ -155,13 +176,13 @@ const SystemBootIntro = ({ onComplete }: { onComplete: () => void }) => {
                     <div className="h-1.5 w-full bg-white/5 rounded-full overflow-hidden">
                         <motion.div
                             initial={{ width: 0 }}
-                            animate={{ width: `${((activeMessageIndex + 1) / BOOT_SEQUENCE.length) * 100}%` }}
+                            animate={{ width: `${((activeMessageIndex + 1) / bootSequence.length) * 100}%` }}
                             className="h-full bg-primary shadow-[0_0_25px_#00f0ff]"
                         />
                     </div>
                     <div className="mt-5 flex justify-between text-[10px] text-gray-700 tracking-[0.4em] uppercase font-bold">
                         <span>HANDSHAKE_PROGRESS</span>
-                        <span className="text-primary/40">{(Math.min(((activeMessageIndex + 1) / BOOT_SEQUENCE.length) * 100, 100)).toFixed(0)}%</span>
+                        <span className="text-primary/40">{(Math.min(((activeMessageIndex + 1) / bootSequence.length) * 100, 100)).toFixed(0)}%</span>
                     </div>
                 </div>
 

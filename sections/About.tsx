@@ -34,20 +34,44 @@ const About = () => {
                                         {/* Image Glow */}
                                         <div className="absolute inset-0 bg-primary/20 rounded-full blur-2xl group-hover:bg-primary/40 transition-colors duration-500" />
 
-                                        {/* Profile Image */}
-                                        <div className="relative w-full h-full rounded-2xl overflow-hidden border border-primary/30 shadow-[0_0_30px_rgba(0,240,255,0.2)]">
+                                        <div className="relative w-full h-full rounded-2xl overflow-hidden border border-primary/30 shadow-[0_0_30px_rgba(0,240,255,0.2)] bg-black">
                                             <img
                                                 src="/profile.png"
                                                 alt="Vijay Ukande – Cybersecurity Professional"
-                                                className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-110"
+                                                className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-110 opacity-100 contrast-[1.1] brightness-[1.05]"
                                             />
+                                            
+                                            {/* CCTV UI Overlay */}
+                                            <div className="absolute inset-0 pointer-events-none p-4 flex flex-col justify-between select-none">
+                                                <div className="flex justify-between items-start">
+                                                    <div className="flex items-center gap-1.5 bg-black/40 backdrop-blur-sm px-2 py-1 rounded">
+                                                        <div className="w-2 h-2 rounded-full bg-red-600 animate-pulse" />
+                                                        <span className="text-[7px] text-white font-mono font-bold">REC</span>
+                                                    </div>
+                                                    <span className="text-[7px] text-white/60 font-mono italic">CAM_01</span>
+                                                </div>
+                                                <div className="flex justify-between items-end">
+                                                    <div className="text-[7px] text-white/80 font-mono space-y-0.5">
+                                                        <p>ISO {Math.floor(Math.random() * 800) + 100}</p>
+                                                        <p>24FPS</p>
+                                                    </div>
+                                                    <div className="text-[8px] text-white font-mono font-bold tracking-widest text-right">
+                                                        {new Date().toLocaleDateString()}<br />
+                                                        {new Date().toLocaleTimeString()}
+                                                    </div>
+                                                </div>
+                                            </div>
+
+                                            {/* Static / Glitch Grain */}
+                                            <div className="absolute inset-0 pointer-events-none opacity-[0.05] bg-[url('https://www.transparenttextures.com/patterns/stardust.png')] mix-blend-overlay" />
+                                            
                                             {/* Scanline overlay */}
                                             <div className="absolute inset-0 pointer-events-none bg-[linear-gradient(rgba(18,16,16,0)_50%,rgba(0,0,0,0.1)_50%)] bg-[length:100%_4px]" />
                                         </div>
 
                                         {/* Corner Accents */}
-                                        <div className="absolute -top-2 -left-2 w-4 sm:w-6 h-4 sm:h-6 border-t-2 border-l-2 border-primary" />
-                                        <div className="absolute -bottom-2 -right-2 w-4 sm:w-6 h-4 sm:h-6 border-b-2 border-r-2 border-primary" />
+                                        <div className="absolute -top-3 -left-3 w-6 sm:w-8 h-6 sm:h-8 border-t-2 border-l-2 border-primary/40 rounded-tl-lg" />
+                                        <div className="absolute -bottom-3 -right-3 w-6 sm:w-8 h-6 sm:h-8 border-b-2 border-r-2 border-primary/40 rounded-br-lg" />
                                     </div>
 
                                     <h4 className="text-primary font-mono text-[8px] sm:text-[10px] mb-2 tracking-[0.4em] sm:tracking-[0.5em] uppercase font-bold">

@@ -68,7 +68,7 @@ const Navbar = () => {
                                     href={link.href}
                                     role="menuitem"
                                     aria-label={`Navigate to ${link.name}`}
-                                    className="relative group text-[11px] font-mono uppercase tracking-[0.2em] text-gray-400 hover:text-white transition-colors"
+                                    className="cyber-glitch-hover relative group text-[11px] font-mono uppercase tracking-[0.2em] text-gray-400 hover:text-white transition-colors"
                                 >
                                     <span className="text-primary/50 mr-1.5" aria-hidden="true">{link.code}</span>
                                     {link.name}
@@ -78,7 +78,7 @@ const Navbar = () => {
 
                             <a
                                 href="#contact"
-                                className="btn-primary text-[10px] py-2.5 px-5 lg:px-6 rounded-full"
+                                className="cyber-glitch-hover btn-primary text-[10px] py-2.5 px-5 lg:px-6 rounded-full"
                                 aria-label="Establish Connection - Contact Section"
                             >
                                 ESTABLISH_CONNECTION

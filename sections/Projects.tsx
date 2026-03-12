@@ -3,6 +3,7 @@
 import React from "react";
 import dynamic from "next/dynamic";
 import { motion } from "framer-motion";
+import { DecryptedText } from "@/components/DecryptedText";
 
 const ProjectNetwork = dynamic(() => import("@/components/ProjectNetwork"), {
     ssr: false,
@@ -34,8 +35,8 @@ const Projects = () => {
                     <div className="flex flex-col sm:flex-row sm:items-end gap-4 justify-between">
                         <div>
                             <h2 className="text-responsive-md sm:text-responsive-lg font-black leading-none">
-                                SECURITY <br />
-                                <span className="text-primary-glow">NETWORK</span>
+                                <DecryptedText text="SECURITY" /> <br />
+                                <span className="text-primary-glow"><DecryptedText text="NETWORK" delay={400} /></span>
                             </h2>
                         </div>
                         <div className="max-w-xs sm:max-w-sm">

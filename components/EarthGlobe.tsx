@@ -3,6 +3,7 @@
 import React, { useRef, useMemo, useState, useEffect } from "react";
 import { Canvas, useFrame } from "@react-three/fiber";
 import { Sphere, Float, Points, PointMaterial, MeshDistortMaterial } from "@react-three/drei";
+import { useInView } from "framer-motion";
 import * as THREE from "three";
 
 interface AttackPath {
@@ -151,12 +152,19 @@ const CyberGlobe = () => {
 };
 
 const EarthGlobe = () => {
+    const containerRef = useRef<HTMLDivElement>(null);
+    const isInView = useInView(containerRef, { margin: "200px" }); // Render slightly before scrolling in
+
     return (
-        <div className="w-full h-full min-h-[350px] sm:min-h-[500px] flex items-center justify-center relative overflow-hidden bg-black/40 rounded-3xl">
+        <div ref={containerRef} className="w-full h-full min-h-[350px] sm:min-h-[500px] flex items-center justify-center relative overflow-hidden bg-black/40 rounded-3xl" aria-label="3D Earth Globe Visualization" role="img">
             {/* Background Cinematic Lighting */}
             <div className="absolute inset-0 bg-radial-at-c from-primary/5 via-transparent to-transparent opacity-30" />
 
-            <Canvas camera={{ position: [0, 0, 6], fov: 45 }} dpr={[1, 2]}>
+            <Canvas 
+                camera={{ position: [0, 0, 6], fov: 45 }} 
+                dpr={[1, 2]}
+                frameloop={isInView ? "always" : "demand"} // Optimization
+            >
                 <ambientLight intensity={0.5} />
                 <pointLight position={[10, 10, 10]} intensity={1.5} color="#00f0ff" />
                 <pointLight position={[-10, -5, -10]} intensity={1} color="#7000ff" />
@@ -169,7 +177,7 @@ const EarthGlobe = () => {
             </Canvas>
 
             {/* Overlay UI elements */}
-            <div className="absolute top-6 right-6 font-mono text-[8px] text-primary/40 text-right leading-relaxed uppercase tracking-widest">
+            <div className="absolute top-6 right-6 font-mono text-[8px] text-primary/40 text-right leading-relaxed uppercase tracking-widest" aria-hidden="true">
                 System_Status: Optimal<br />
                 Encryption: AES_256_LIVE<br />
                 Neural_Sync: 88%
